@@ -7,9 +7,13 @@ function setup() {
   createCanvas(400, 400);
 
   // ray = new Ray(100, 200); 
-  particles.push(new Particle());
-  particles.push(new Particle());
+  particles.push(new Particle(width/2., height/2., 1, 0, 90));
+  particles.push(new Particle(width/2., height/2., 1, 0, 40));
+  particles.push(new Particle(width/2., height/2., 1, 0, 360));
 
+  particles[0].state = ParticleState.RandomWalk;
+  particles[1].state = ParticleState.RandomWalk;
+  particles[2].state = ParticleState.FollowMouse;
 
   for (let i=0; i<5; i++) {
     const x1 = random(0, width);
@@ -31,16 +35,15 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-
-  // ray.draw();
+  background(0,50);
   for (let wall of walls) {
     wall.draw();
   }
 
   for (let particle of particles) {
-    particle.randomWalk();
+    particle.update();
     particle.check(walls);
+    particle.draw();
   }
 
 }
